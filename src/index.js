@@ -14,19 +14,25 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('http://localhost:3000/pups')
       .then(res => res.json())
       .then(dogs => {
+
         dogBar.innerHTML = ''
+
         dogs.forEach(dog => {
           if (!isFilterActive || dog.isGoodDog) {
             const span = document.createElement('span')
             span.textContent = dog.name
+
             dogBar.appendChild(span)
 
             span.addEventListener('click', () => {
               dogInfo.innerHTML = ''
+
               const dogImg = document.createElement('img')
               dogImg.src = dog.image
+
               const dogName = document.createElement('h2')
               dogName.textContent = dog.name
+
               const dogStatusBtn = document.createElement('button')
               dogStatusBtn.textContent = dog.isGoodDog ? "Good dog!" : "Bad dog!"
               dogStatusBtn.id = 'dog-status-btn'
