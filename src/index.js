@@ -28,13 +28,13 @@ document.addEventListener('DOMContentLoaded', () => {
               const dogName = document.createElement('h2')
               dogName.textContent = dog.name
               const dogStatusBtn = document.createElement('button')
-              dogStatusBtn.textContent = dog.isGoodDog
+              dogStatusBtn.textContent = dog.isGoodDog ? "Good dog!" : "Bad dog!"
               dogStatusBtn.id = 'dog-status-btn'
 
               dogInfo.append(dogImg, dogName, dogStatusBtn)
 
               dogStatusBtn.addEventListener('click', () => {
-                updateIsGoodDog(dog.id, dog.isGoodDog)
+                updateIsGoodDog(dog, dogStatusBtn)
               })
             })
           }
@@ -42,24 +42,23 @@ document.addEventListener('DOMContentLoaded', () => {
       })
   }
 
-  const updateIsGoodDog = (id, currentDogStatus) => {
-    const toggleDogStatus = !currentDogStatus
+  const updateIsGoodDog = (dog, button) => {
+    const newDogStatus = !dog.isGoodDog
 
-    return fetch(`http://localhost:3000/pups/${id}`, {
+    return fetch(`http://localhost:3000/pups/${dog.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
       body: JSON.stringify({
-        isGoodDog: toggleDogStatus
+        isGoodDog: newDogStatus
       })
     })
       .then(res => res.json())
       .then(patchedDog => {
-        const patchBtn = document.querySelector('#dog-status-btn')
-        patchBtn.textContent = patchedDog.isGoodDog
-        getPups()
+        dog.isGoodDog = patchedDog.isGoodDog
+        button.textContent = dog.isGoodDog ? "Good dog!" : "Bad dog!"
       })
   }
 
