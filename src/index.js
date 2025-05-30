@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const updateIsGoodDog = (dog, button) => {
     const newDogStatus = !dog.isGoodDog
 
-    return fetch(`http://localhost:3000/pups/${dog.id}`, {
+    fetch(`http://localhost:3000/pups/${dog.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
